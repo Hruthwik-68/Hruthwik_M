@@ -74,16 +74,22 @@
 
     .toggle-btn {
       margin-top: 0.5rem;
-      cursor: pointer;
-      font-size: 1.8rem;
-      background: none;
-      border: none;
+      font-size: 1rem;
+      background-color: transparent;
+      border: 1px solid var(--accent);
       color: inherit;
-      transition: transform var(--transition);
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all var(--transition);
     }
 
     .toggle-btn:hover {
-      transform: scale(1.1);
+      background-color: var(--accent);
+      color: #fff;
     }
 
     .pdf-container {
@@ -152,6 +158,10 @@
         padding: 1rem 2rem;
       }
 
+      .toggle-btn {
+        margin-top: 0;
+      }
+
       .button-group {
         flex-direction: row;
         gap: 1rem;
@@ -173,11 +183,11 @@
 <body>
   <div class="top-bar">
     <h1>Hruthwik M - Resume</h1>
-    <button class="toggle-btn" id="modeToggle" aria-label="Toggle light/dark mode">🌙</button>
+    <button class="toggle-btn" id="modeToggle">🌙 Dark</button>
   </div>
 
   <div class="pdf-container">
-    <iframe src="Hruthwik_M.pdf#toolbar=0" title="Resume PDF Viewer"></iframe>
+    <iframe src="Hruthwik_M.pdf#zoom=page-width" title="Resume PDF Viewer"></iframe>
   </div>
 
   <div class="button-group">
@@ -196,10 +206,10 @@
     function setTheme(mode) {
       if (mode === "dark") {
         body.classList.add("dark");
-        toggleBtn.textContent = "🌞";
+        toggleBtn.textContent = "🌙 Dark";
       } else {
         body.classList.remove("dark");
-        toggleBtn.textContent = "🌙";
+        toggleBtn.textContent = "🌞 Light";
       }
     }
 
