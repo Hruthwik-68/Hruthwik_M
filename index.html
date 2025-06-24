@@ -2,76 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Resume - Hruthwik M</title>
   <style>
     :root {
       --light-bg: #f9f9fb;
       --light-text: #222;
-      --light-card: #ffffff;
-      --light-shadow: rgba(0, 0, 0, 0.08);
+      --light-card: #fff;
+      --light-shadow: rgba(0,0,0,0.08);
 
       --dark-bg: #1E1F26;
       --dark-text: #f2f2f2;
       --dark-card: #2A2B32;
-      --dark-shadow: rgba(255, 255, 255, 0.05);
+      --dark-shadow: rgba(255,255,255,0.05);
 
       --accent: #0A3866;
       --transition: 0.3s ease-in-out;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--light-bg);
+      margin: 0; font-family: 'Segoe UI', sans-serif;
+      background: var(--light-bg);
       color: var(--light-text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh; padding: 1rem;
       transition: background var(--transition), color var(--transition);
-      min-height: 100vh;
-      position: relative;
-      padding: 1rem;
-      animation: fadeIn 1s ease;
     }
-
     body.dark {
-      background-color: var(--dark-bg);
+      background: var(--dark-bg);
       color: var(--dark-text);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     .top-bar {
-      width: 100%;
-      max-width: 1000px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      width: 100%; max-width: 1000px;
+      display: flex; flex-direction: column; align-items: center;
       padding: 1rem 0;
       box-shadow: 0 2px 6px var(--light-shadow);
-      background-color: inherit;
+      background: inherit;
       transition: box-shadow var(--transition);
+      text-align: center;
     }
-
     body.dark .top-bar {
       box-shadow: 0 2px 6px var(--dark-shadow);
     }
-
     h1 {
-      margin: 0.3rem 0;
-      font-size: 1.6rem;
-      font-weight: 600;
+      margin: 0.3rem 0; font-weight: 600; font-size: 1.6rem;
     }
-
     .toggle-btn {
       margin-top: 0.5rem;
       font-size: 1rem;
@@ -86,35 +61,31 @@
       gap: 0.4rem;
       transition: all var(--transition);
     }
-
     .toggle-btn:hover {
       background-color: var(--accent);
       color: #fff;
     }
-
-    .pdf-container {
-      width: 100%;
-      max-width: 800px;
+    #pdf-viewer {
+      width: 100%; max-width: 800px;
       height: 75vh;
+      background: var(--light-card);
       border-radius: 8px;
       box-shadow: 0 4px 12px var(--light-shadow);
-      overflow: hidden;
+      overflow: auto;
       margin: 1rem 0;
-      background-color: var(--light-card);
       transition: background var(--transition), box-shadow var(--transition);
+      display: flex; justify-content: center; align-items: flex-start;
     }
-
-    body.dark .pdf-container {
-      background-color: var(--dark-card);
+    body.dark #pdf-viewer {
+      background: var(--dark-card);
       box-shadow: 0 4px 12px var(--dark-shadow);
     }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
     .button-group {
       display: flex;
       flex-direction: column;
@@ -125,7 +96,6 @@
       justify-content: center;
       margin-bottom: 2rem;
     }
-
     .action-btn {
       background-color: var(--accent);
       color: #fff;
@@ -138,18 +108,15 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 100%;
     }
-
     .action-btn:hover {
       background-color: #06294d;
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
-
     a {
       text-decoration: none;
       width: 100%;
     }
-
     @media (min-width: 768px) {
       .top-bar {
         flex-direction: row;
@@ -157,22 +124,18 @@
         text-align: left;
         padding: 1rem 2rem;
       }
-
       .toggle-btn {
         margin-top: 0;
       }
-
       .button-group {
         flex-direction: row;
         gap: 1rem;
         max-width: none;
         margin-bottom: 2rem;
       }
-
       a {
         width: auto;
       }
-
       .action-btn {
         width: auto;
         min-width: 160px;
@@ -186,41 +149,90 @@
     <button class="toggle-btn" id="modeToggle">🌙 Dark</button>
   </div>
 
-  <div class="pdf-container">
-    <iframe src="Hruthwik_M.pdf#zoom=page-width" title="Resume PDF Viewer"></iframe>
+  <div id="pdf-viewer" aria-label="PDF Resume Viewer">
+    <canvas id="pdf-canvas"></canvas>
   </div>
 
   <div class="button-group">
     <a href="Hruthwik_M.pdf" download>
       <button class="action-btn">⬇️ Download PDF</button>
     </a>
-    <a href="Hruthwik_M.pdf" target="_blank">
+    <a href="Hruthwik_M.pdf" target="_blank" rel="noopener noreferrer">
       <button class="action-btn">📄 View as PDF</button>
     </a>
   </div>
 
+  <!-- PDF.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+
   <script>
-    const toggleBtn = document.getElementById("modeToggle");
+    const url = 'Hruthwik_M.pdf';
+
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js';
+
+    const canvas = document.getElementById('pdf-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let pdfDoc = null;
+    let currentPage = 1;
+    let scale = 1;
+
+    function renderPage(num) {
+      pdfDoc.getPage(num).then(function(page) {
+        const container = document.getElementById('pdf-viewer');
+        const containerWidth = container.clientWidth;
+        const viewport = page.getViewport({ scale: 1 });
+
+        // Calculate scale to fit container width
+        scale = containerWidth / viewport.width;
+
+        // Use device pixel ratio for sharpness
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = viewport.width * scale * dpr;
+        canvas.height = viewport.height * scale * dpr;
+        canvas.style.width = (viewport.width * scale) + 'px';
+        canvas.style.height = (viewport.height * scale) + 'px';
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const scaledViewport = page.getViewport({ scale: scale });
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: scaledViewport,
+        };
+        page.render(renderContext);
+      });
+    }
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      renderPage(currentPage);
+    });
+
+    // Dark mode toggle
+    const toggleBtn = document.getElementById('modeToggle');
     const body = document.body;
 
     function setTheme(mode) {
-      if (mode === "dark") {
-        body.classList.add("dark");
-        toggleBtn.textContent = "🌙 Dark";
+      if (mode === 'dark') {
+        body.classList.add('dark');
+        toggleBtn.textContent = '🌙 Dark';
       } else {
-        body.classList.remove("dark");
-        toggleBtn.textContent = "🌞 Light";
+        body.classList.remove('dark');
+        toggleBtn.textContent = '🌞 Light';
       }
     }
 
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
 
-    toggleBtn.addEventListener("click", () => {
-      const isDark = body.classList.contains("dark");
-      const newTheme = isDark ? "light" : "dark";
+    toggleBtn.addEventListener('click', () => {
+      const isDark = body.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
       setTheme(newTheme);
-      localStorage.setItem("theme", newTheme);
+      localStorage.setItem('theme', newTheme);
     });
   </script>
 </body>
