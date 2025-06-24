@@ -65,17 +65,26 @@
       background-color: var(--accent);
       color: #fff;
     }
-    #pdf-viewer {
-      width: 100%; max-width: 800px;
-      height: 75vh;
-      background: var(--light-card);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px var(--light-shadow);
-      overflow: auto;
-      margin: 1rem 0;
-      transition: background var(--transition), box-shadow var(--transition);
-      display: flex; justify-content: center; align-items: flex-start;
-    }
+ #pdf-viewer {
+  width: 100%; 
+  max-width: 800px;
+
+  /* Remove fixed height */
+  height: auto;  
+
+  max-height: 75vh;  /* limit max height for tall screens */
+
+  background: var(--light-card);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--light-shadow);
+  overflow-y: auto;  /* allow scrolling if PDF is tall */
+  margin: 1rem 0;
+  transition: background var(--transition), box-shadow var(--transition);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* keep PDF aligned to top */
+}
+
     body.dark #pdf-viewer {
       background: var(--dark-card);
       box-shadow: 0 4px 12px var(--dark-shadow);
